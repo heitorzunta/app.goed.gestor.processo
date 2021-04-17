@@ -9,27 +9,26 @@ require_once '/Users/heitorbatistelazunta/Desktop/Projetos_php/app.goed.gestor.p
 
 try {
     $ata = new ATA(
-        '094/2020',
-        '055/2019',
+        '0942020',
+        '0552019',
         '2020-04-08',
         6,
-        '1254',
+        1254.04,
         'Aquisição de gêneros alimentícios'
-    );    
+    );
 
+    $connection = ConnectionFactory::connection();
 
-$connection = ConnectionFactory::connection();
+    $repositorio = new RepositoryATAs($connection);
 
-$repositorio = new RepositoryATAs($connection);
-
-var_dump($ata);
-echo $ata->getValor() . PHP_EOL;
-// die();
-
-$repositorio->adicionar($ata);
-//$repositorio->listarTodas();
+    // $ata->setAditivo(3);
+    // $repositorio->adicionar($ata);
+    $lista = $repositorio->listarTodas();
+    var_dump($lista);
 
 } catch (DomainException $e){
     echo ("ERRO {$e->getMessage()}");
+} finally {
+    $connection = null;
 }
 ?>

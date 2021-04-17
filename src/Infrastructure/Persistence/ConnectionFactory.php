@@ -19,19 +19,20 @@ class ConnectionFactory {
 		try {
 			$pdo = new PDO($dsn);
 
-
-			$request = 'CREATE IF NOT EXISTS TABLE ATA (numero_ata TEXT PRIMARY KEY,
-							pregao_ata TEXT, 
-							dtInicio_ata TEXT, 
-							vigencia_ata INTEGER, 
-							valor_ata TEXT, 
-							funcao_ata TEXT, 
-							descricao_ata TEXT, 
-							estado_ata INTEGER, 
-							aditamento_ata INTEGER)';
+			$request = 'CREATE TABLE IF NOT EXISTS ATA (
+				numero_ata VARCHAR(8) PRIMARY KEY NOT NULL, 
+				pregao_ata VARCHAR(8) NOT NULL, 
+				dtInicio_ata DATE NOT NULL, 
+				vigencia_ata INTEGER NOT NULL, 
+				valor_ata DECIMAL NOT NULL, 
+				funcao_ata VARCHAR(255), 
+				descricao_ata VARCHAR(255), 
+				estado_ata BOOLEAN, 
+				aditamento_ata INTEGER
+				)';
 
 			$pdo->exec($request);
-
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return $pdo;
 
 		} catch (PDOException $e) {

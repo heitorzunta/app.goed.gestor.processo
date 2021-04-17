@@ -28,9 +28,11 @@ class ATA {
 		string $pregao,
 		string $dataInicio,
 		int $vigencia,
-		string $valor,
+		float $valor,
 		string $funcao,
-		int $estado = 1
+		?string $descricao = '',
+		?int $estado = 1,
+		?int $aditamento = 0
 	) {
 		$this->setNumero($numero);
 		$this->setPregao($pregao);
@@ -39,8 +41,8 @@ class ATA {
 		$this->setValor($valor);
 		$this->setFuncao($funcao);
 		$this->setEstado($estado);
-		$this->aditamento = 0;
-		$this->descricao = '';
+		$this->aditamento = $aditamento;
+		$this->setDescricao($descricao);
 	}
 
 	# Métodos de acesso e encapsulamento
@@ -54,26 +56,24 @@ class ATA {
 	}
 
 	public function setNumero(string $numero): void {
-		if (strlen($numero) != 8) {
+		if (strlen($numero) != 7) {
 			throw new Exception('Número de ATA incorreto!');
 		}
-		$numero = str_replace("/", '', $numero);
 		$this->numero = $numero;
 	}
 
-	public function getNumero(): String{
+	public function getNumero(): string{
 		return $this->numero;
 	}
 
 	public function setPregao(string $pregao): void {
-		if (strlen($pregao) != 8) {
+		if (strlen($pregao) != 7) {
 			throw new DomainException('Número de Pregão incorreto!');
 		}
-		$pregao = str_replace("/", '', $pregao);
 		$this->pregao = $pregao;
 	}
 
-	public function getPregao(): String{
+	public function getPregao(): string{
 		return $this->pregao;
 	}
 
@@ -96,16 +96,20 @@ class ATA {
 		return $this->vigencia;
 	}
 
-	public function setValor(string $valor): void{
-		$this->valor = (float) $valor;
+	public function setValor(float $valor): void{
+		$this->valor = $valor;
 	}
 
-	public function getValor(): string{
-		return (String) $this->valor;
+	public function getValor(): float{
+		return $this->valor;
 	}
 
 	public function setDescricao(string $descricao): void{
-		$this->descricao = $this->descricao . $descricao;
+		if($descricao == ''){
+			$this->descricao = '';
+		} else {
+			$this->descricao = $this->descricao . $descricao;
+		}
 	}
 
 	public function getDescricao(): string {
@@ -116,7 +120,7 @@ class ATA {
 		$this->estado = $estado;
 	}
 
-	public function getEstado(): string {
+	public function getEstado(): bool {
 		return $this->estado;
 
 	}
