@@ -27,7 +27,7 @@ class ConnectionFactory {
 				valor_ata DECIMAL NOT NULL, 
 				funcao_ata VARCHAR(255), 
 				descricao_ata VARCHAR(255), 
-				estado_ata BOOLEAN, 
+				estado_ata INTEGER, 
 				aditamento_ata INTEGER
 				)';
 

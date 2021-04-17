@@ -57,6 +57,17 @@ class RepositoryATAs
         return $sttm->execute();
     }
 
+    //Excluir Ata listada do Bando de Dados
+    public function excluir(ATA $ata): bool{
+        $sqlDelete = 'DELETE FROM ATA 
+        WHERE numero_ata LIKE :numeroAta';
+
+        $sttm = $this->conn->prepare($sqlDelete);
+        $sttm->bindValue('numeroAta', $ata->getNumero());
+        return $sttm->execute();
+
+    }
+
     //funcao de listar todos no banco
     public function listarTodas(): array
     {
@@ -65,7 +76,17 @@ class RepositoryATAs
         return $this->hydratateATAList($sttm);
     }
 
-    //funcao de hidratacao de elementos do banco para objetos
+    //Listar todas as ATAS ATIVAS
+    public function listarTodasAtivas(): array
+    {
+        $sqlAtiva = 'SELECT * FROM ATA 
+        WHERE estado_ata = 1';
+
+        $sttm = $this->conn->query($sqlAtiva);
+        return $this->hydratateATAList($sttm);
+    }
+
+    //Funcao de hidratacao de elementos do banco para objetos
     public function hydratateATAList(PDOStatement $sttm): array
     {
         $listaATA  = [];
@@ -77,14 +98,13 @@ class RepositoryATAs
             $ATADado['vigencia_ata'],
             $ATADado['valor_ata'],
             $ATADado['funcao_ata'],
-            $ATADado['descricao_ata'],
             $ATADado['estado_ata'],
+            $ATADado['descricao_ata'],
             $ATADado['aditamento_ata']
             );
         }
         return $listaATA;
     }
-
 
 }
 

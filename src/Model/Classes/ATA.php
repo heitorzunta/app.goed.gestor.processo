@@ -18,11 +18,10 @@ class ATA {
 	private float $valor;
 	private string $funcao; //indica para que serve a ATA
 	private string $descricao;
-	private bool $estado;
+	private int $estado;
 	private int $aditamento;
 
 	# construtor
-
 	public function __construct(
 		string $numero,
 		string $pregao,
@@ -30,8 +29,8 @@ class ATA {
 		int $vigencia,
 		float $valor,
 		string $funcao,
-		?string $descricao = '',
 		?int $estado = 1,
+		?string $descricao = '',
 		?int $aditamento = 0
 	) {
 		$this->setNumero($numero);
@@ -40,13 +39,13 @@ class ATA {
 		$this->setVigencia($vigencia);
 		$this->setValor($valor);
 		$this->setFuncao($funcao);
+		$this->setDescricao($descricao);
 		$this->setEstado($estado);
 		$this->aditamento = $aditamento;
-		$this->setDescricao($descricao);
+
 	}
 
 	# Métodos de acesso e encapsulamento
-
 	public function setFuncao(string $funcao): void{
 		$this->funcao = $funcao;
 	}
@@ -120,7 +119,7 @@ class ATA {
 		$this->estado = $estado;
 	}
 
-	public function getEstado(): bool {
+	public function getEstado(): int {
 		return $this->estado;
 
 	}
